@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "valliammaise",
+    "password": "SV@db*22",
+    "database": "valliammaise",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "valliammaise",
+    "password": "SV@db*22",
+    "database": "valliammaise",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "valliammaise",
+    "password": "SV@db*22",
+    "database": "valliammaise",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}
