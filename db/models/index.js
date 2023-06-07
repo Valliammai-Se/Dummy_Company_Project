@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const process = require('process');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/dbconfig.json')[env];
 const db = {};
 
 let sequelize;
@@ -36,6 +36,20 @@ Object.keys(db).forEach(modelName => {
     db[modelName].associate(db);
   }
 });
+db.persons = require("../models/persons.js")(sequelize, Sequelize);
+db.roles = require("../models/roles.js")(sequelize, Sequelize);
+
+db.roles.belongsToMany(db.persons, {
+  through: "user_roles",
+  foreignKey: "roleId",
+  otherKey: "userId"
+});
+db.persons.belongsToMany(db.roles, {
+  through: "user_roles",
+  foreignKey: "userId",
+  otherKey: "roleId"
+});
+db.ROLES = ["user", "admin", "moderator"];
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

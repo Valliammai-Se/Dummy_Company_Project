@@ -1,11 +1,17 @@
 const express = require("express");
 const expressApp = require("./expressApp.js");
 const db= require("./db/models/index.js");
+const Role = db.roles;
 
+db.sequelize.sync({force: true}).then(() => {
+  console.log('Drop and Resync Db');
+  initial();
+});
 
 const StartServer = async () => {
-  const app = express();
-
+const app = express();
+require('./routes/authRoutes')(app);
+require('./routes/userRoutes')(app);
   try {
     await db.sequelize.authenticate();
 
@@ -13,7 +19,6 @@ const StartServer = async () => {
   } catch (error) {
     console.error("Unable to connect to the database:", error);
   }
-
   await expressApp(app);
 
   app.listen(3000, () => {
@@ -26,5 +31,20 @@ const StartServer = async () => {
       process.exit();
     });
 };
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
+
 
 StartServer();

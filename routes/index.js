@@ -8,5 +8,6 @@ const routes = (app) => {
   app.use("/companies", companyRoutes());
   app.use("/projects", projectRoutes());
   app.use("/projectAssignments", projectassignRoutes());
+
 };
 module.exports = routes;
